@@ -1,2 +1,4 @@
 syntax: glob
 .DS_Store
+mann09_cfr\.m
+snr_selection\.m
