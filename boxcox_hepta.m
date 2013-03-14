@@ -16,8 +16,10 @@ function [z,lambda] = boxcox_hepta(y);
 %   Note: the numerical tolerance for lambda is set at 1e-5
 %
 %  Julien Emile-Geay, USC, June 2012
-%  based on boxcox.m by unknown
-% 
+%  
+% Reference: 
+%   Box, G., and D. Cox (1964), An analysis of transformations, J. Roy. Stat. Soc., Ser. B
+%    
 % ===================================================================
 
 y    = y(:); %ensure that y is a column vector and positive definite
