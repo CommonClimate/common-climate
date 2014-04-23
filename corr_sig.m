@@ -1,5 +1,5 @@
 function [r,signif,p] = corr_sig(x,y,options)
-% CORR_SIG  [r,signif,p] = corr_sig(x,y,level,nsim)
+% CORR_SIG  [r,signif,p] = corr_sig(x,y,options)
 % - estimates the significance of correlations between non IID 
 %             time series by 3 independent methods
 %  1) T-test where d.o.f are corrected for the
