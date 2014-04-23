@@ -28,6 +28,10 @@ function [Xp tp tmc] = BAM_simul_perturb(X,t,model)
 % tmc: corresponding ensemble of time-correction matrices (tn*p*ns) to map realizations in Xp back to the original data X (2=insert nan, 0=remove double band) (2 or 3d)
 % where tn is the chronology length = n (default), shortest sample or longest sample
 % depending on the chosen resizing option.
+%
+% Author: Maud Comboul, 2013. 
+% Reference: http://www.clim-past-discuss.net/9/6077/2013/cpd-9-6077-2013.html
+% =================================================================================
 
 if size(X,1) < size(X,2)
     X = X';
