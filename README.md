@@ -11,3 +11,4 @@ Why make Matlab code open? This sounds like a paradox, since Matlab is an evil p
 TBD
 
 Please cite the following DOI when you use the code:
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.32474.svg)](http://dx.doi.org/10.5281/zenodo.32474)
