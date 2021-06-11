@@ -1,16 +1,16 @@
 function [spec,eig_vec,PC,RC,RCp,modes] = hepta_ssam(X,options)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Function hepta_ssam : performs Singular Spectrum Analysis 
+% Function hepta_ssam : performs Singular Spectrum Analysis
 %                          on time series X, allowing for missing data
 %
 % syntax : [spec,eig_vec,PC,RC,RCp,modes] = hepta_ssam(X,options)
-% input: 
+% input:
 %    X, vector
 %   options, structure with optional parameters [default value]:
 %   - options.f : fraction (0<f<=1) of good data points for identifying
 %   significant PCs [f = 0.3]
 %   - options.M : window length [length(X)/10]
-%   - options.crit_name : criterion used to determine significant modes. 
+%   - options.crit_name : criterion used to determine significant modes.
 % Possible values are:
 %     * 'kaiser' = retain all modes whose eigenvalue exceeds the median of
 %     all eigenvalues (ref. 4, page 540) [this is the default]
@@ -19,7 +19,7 @@ function [spec,eig_vec,PC,RC,RCp,modes] = hepta_ssam(X,options)
 %
 %   - options.K : number of significant modes to be used (overrides crit_name)
 %   - options.P : minimum fraction of signal to reconstruct if 'pct_var' option is used [0.7]
-%   - options.MC : number of MC simulations in 'mcssa' case 
+%   - options.MC : number of MC simulations in 'mcssa' case
 %   - options.iplot : boolean variable to plot the MCSSA eigenvalues [0]
 %
 % output :
@@ -52,7 +52,7 @@ N = length(X);
 % set default values
 f = 0.3;
 M = round(N/10);
-iplot = 0; 
+iplot = 0;
 kaiser_crit = true;
 mcssa = false;
 pct_var = false;
@@ -65,14 +65,14 @@ if nargin > 1 && ~isempty(options)
          error('M should be less than the signal length')
       end
    end
-   
+
    if isfield(options,'f')
       f = options.f;
       if f<=0 || f>1
          error('f must be in (0,1]')
       end
    end
-   
+
    if isfield(options,'K')
       K = options.K;
       if K>M
@@ -80,7 +80,7 @@ if nargin > 1 && ~isempty(options)
       end
       modes = 1:K;
    end
-   
+
    if isfield(options,'crit_name')
       if strcmpi(options.crit_name,'mcssa')
          mcssa = true;
@@ -133,7 +133,7 @@ if pct_var
    K=1;
    while var_percent < P*sum_eval
       var_percent = var_percent + deval(K);
-      K=K+1;   
+      K=K+1;
    end
    modes = 1:K;
 end
@@ -146,12 +146,12 @@ if mcssa
    for jt=2:N  %
       noise(jt,:) = a(1)*noise(jt-1,:)+ s*randn(1,MC);
    end
-   
+
    for m = 1:MC
-      noise(:,m) = (noise(:,m)-mean(noise(:,m)))/std(noise(:,m));      
+      noise(:,m) = (noise(:,m)-mean(noise(:,m)))/std(noise(:,m));
       [Gn,ln]       = xcorr(noise(:,m),M-1,'unbiased');
       Cn            = toeplitz(Gn(M:2*M-1));%/M;
-      Lambda_R(:,m) =  diag(eig_vec * Cn * eig_vec'); % noise "eigenvalues"
+      Lambda_R(:,m) =  diag(eig_vec' * Cn * eig_vec); % noise "eigenvalues"
    end
    q95 = quantile(Lambda_R,0.95,2);
    modes = find(deval > q95)'; % index of modes rising above the background
